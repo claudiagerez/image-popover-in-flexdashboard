@@ -1,0 +1,65 @@
+---
+title: "Table Sample"
+output: 
+    flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $('img.thumb').popover({ html:true, trigger: 'hover', content: function() {
+      var imgURI = $(this).attr('src');
+      return "<img class='popup' src='" + imgURI + "' />";
+    } }); 
+});
+</script>
+
+<style>
+
+  img.thumb {
+    max-width: 75px;
+  }
+
+  img.popup {
+    max-width: 300px;
+  }
+
+  .popover {
+    max-width: none;
+  }
+  
+</style>
+
+``` {r global, include = FALSE}
+library(tidyverse)
+library(flexdashboard)
+library(kableExtra)
+```
+
+IMAGES
+===========================================================================
+
+``` {r}
+dt <- data.frame(rank = c(1, 2, 3, 4, 5), image_url = 
+c('https://images.unsplash.com/photo-1521671413015-ce2b0103c8c7?ixlib=rb-0.3.5&s=45547f67f01ffdcad0e33c8417b840a9&auto=format&fit=crop&w=667&q=80', "https://images.unsplash.com/photo-1520699697851-3dc68aa3a474?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ef15aee8bcb3f5928e5b31347adb6173&auto=format&fit=crop&w=400&q=80", "https://images.unsplash.com/photo-1501925873391-c3cd73416c5b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=379e4a0fffc6d11cd5794806681d0211&auto=format&fit=crop&w=750&q=80", "https://images.unsplash.com/photo-1493019352063-500af484329e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f1e0ce442afdcaf2cdc4fde83012346e&auto=format&fit=crop&w=750&q=80", "https://images.unsplash.com/photo-1422056551295-3b38e8a20462?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3eb1f67f2b9c1c26435fc584a0a1f75d&auto=format&fit=crop&w=667&q=80"))
+
+img_dt <- dt %>%
+  mutate(img = paste0("![](", image_url, ")"), thumb = paste0("<img class='thumb' src='", image_url, "'/>"))  %>%
+  select(rank, thumb)
+
+knitr::kable(img_dt, escape = FALSE) %>%
+  kable_styling("striped", full_width = FALSE)
+  
+```
